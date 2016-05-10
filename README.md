@@ -1,5 +1,7 @@
 # 24Puzzle
 Podstawy Sztucznej Inteligencji
+
+<br />
 W problemie „24 puzzli” znane są: stan początkowy i wymagany stan końcowy.
 Rozwiązać   problem   złagodzony   wobec   problemu   24   puzzli,   w   którym   pojedyncza   akcja 
 polega   na   natychmiastowym   przemieszczeniu   (jedną   akcją)   jednego   kafelka   na   wymagane miejsce   
