@@ -13,7 +13,8 @@ public class View
 	JButton pauseButton;
 	JLabel stepEveryLabel;
 	JLabel secondsLabel;
-	int screenWidth, screenHeight;
+	//TODO: Trzeba zoribæ mapê ca³¹ guzików 5x5
+	private int screenWidth, screenHeight;
 	View()
 	{
 		mainFrame = new JFrame();
@@ -35,6 +36,9 @@ public class View
 	
 	public void createFrame()
 	{
+		SpringLayout layout = new SpringLayout();
+		mainPanel.setLayout(layout);
 		
+		Dimension buttonSize = new Dimension (100, 25);
 	}
 }
