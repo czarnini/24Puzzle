@@ -1,4 +1,3 @@
-
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Stack;
@@ -79,41 +78,145 @@ public class GameControl {
 				}
 			}
 		}
-		
+	}
+	
+	public void print()
+	{
 		for ( int i = 0; i < GameControl.WIDTH; ++i)
 		{
 			for(int j=0; j<GameControl.WIDTH; ++j)
 			{
-				if(!board[i][j].isEmpty())
-				System.out.println(board[i][j].peek().getID());	
+				if(!board[j][i].isEmpty())
+				System.out.print(board[j][i].peek().getID()+"\t");	
 				else
-					System.out.println("NULLLLLLLLLLLLL");
+					System.out.print("\t");
 			}
+			System.out.println();
 		}
-		
+		System.out.println();
+		System.out.println();
 	}
 
 	public void move(Direction where, int x, int y)
 	{
+		if(board[x][y].isEmpty())
+		{
+			return;
+		}
 		switch(where)
 		{
 			case left:
 			{
+				if(x == 0)
+				{
+					return;
+				}
+				else
+				{
+					board[x-1][y].push(board[x][y].pop());
+				}
 				break;
 			}
 			case right:
 			{
+				if(x == GameControl.WIDTH-1)
+				{
+					return;
+				}
+				else
+				{
+
+					board[x+1][y].push(board[x][y].pop());
+				}
 				break;
 			}
 			case up:
 			{
+				if(y == 0)
+				{
+					return;
+				}
+				else
+				{
+
+					board[x][y-1].push(board[x][y].pop());
+				}
 				break;
 			}
 			case down:
 			{
+				if(y == GameControl.WIDTH-1)
+				{
+					return;
+				}
+				else
+				{
+					board[x][y+1].push(board[x][y].pop());
+				}
 				break;
 			}
 		}
 	}
-
+	
+	void moveHole( Direction where, int x, int y)
+	{
+		if(!board[x][y].isEmpty())
+		{
+			return;
+		}
+		switch(where)
+		{
+			case left:
+			{
+				if(x == 0 || board[x-1][y].size()>1)
+				{
+					return;
+				}
+				else
+				{
+					move(Direction.right, x-1, y);
+				}
+				break;
+			}
+			
+			case right:
+			{
+				if(x == GameControl.WIDTH-1 || board[x+1][y].size()>1)
+				{
+					return;
+				}
+				else
+				{
+					move(Direction.left, x+1, y);
+				}
+				break;
+			}
+			
+			case down:
+			{
+				if(y == GameControl.WIDTH-1 || board[x][y+1].size()>1)
+				{
+					return;
+				}
+				else
+				{
+					move(Direction.up, x, y+1);
+				}
+				break;
+			}
+			
+			case up:
+			{
+				if(y == 0 || board[x][y-1].size()>1)
+				{
+					return;
+				}
+				else
+				{
+					move(Direction.down, x, y-1);
+				}
+				break;
+			}
+		}
+	}
 }
