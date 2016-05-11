@@ -50,15 +50,33 @@ public class GameControl {
 	public void Randomize()
 	{
 		Random generator = new Random();
+		Puzzel tmpPuzzel;
 		for ( int i = 0; i < GameControl.WIDTH; ++i)
 		{
 			for(int j=0; j<GameControl.WIDTH; ++j)
 			{
-				Puzzel tmpPuzzel = board[i][j].pop();
+				
+				if(!board[i][j].isEmpty())
+				{
+					tmpPuzzel = board[i][j].pop();
+				}
+				else
+				{
+					continue;
+				}
+				
 				int newx = generator.nextInt(GameControl.WIDTH);
 				int newy = generator.nextInt(GameControl.WIDTH);
-				board[i][j].push(board[newx][newy].pop());
-				board[newx][newy].push(tmpPuzzel);
+				
+				if(board[newx][newy].isEmpty())
+				{
+					board[newx][newy].push(tmpPuzzel);
+				}
+				else
+				{
+					board[i][j].push(board[newx][newy].pop());
+					board[newx][newy].push(tmpPuzzel);
+				}
 			}
 		}
 		
@@ -66,9 +84,36 @@ public class GameControl {
 		{
 			for(int j=0; j<GameControl.WIDTH; ++j)
 			{
+				if(!board[i][j].isEmpty())
 				System.out.println(board[i][j].peek().getID());	
+				else
+					System.out.println("NULLLLLLLLLLLLL");
 			}
 		}
 		
 	}
+
+	public void move(Direction where, int x, int y)
+	{
+		switch(where)
+		{
+			case left:
+			{
+				break;
+			}
+			case right:
+			{
+				break;
+			}
+			case up:
+			{
+				break;
+			}
+			case down:
+			{
+				break;
+			}
+		}
+	}
+
 }
