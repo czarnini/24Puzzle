@@ -11,7 +11,7 @@ public class GVControler
 		this.view = view;
 		this.gameControl = gameControl;
 		view.linkController(this);
-		//gameControl.linkController(this);
+		gameControl.linkController(this);
 	}
 	
 	public void gameStart()

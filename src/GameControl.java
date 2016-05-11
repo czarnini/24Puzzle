@@ -3,18 +3,40 @@ import java.util.Random;
 import java.util.Stack;
 
 /**
-* Funkcjonalnoœæ klasy:
-* 1. Dodaj klocki do planszy
-* 2. Mieszaj klocki
-* 3. Resetuj ustawienie planszy (?)
-* 4. Wykonaj ruch
-*/
+ * Kontroler Gry, zawiera reprezentacjê planszy
+ * Klasa umo¿liwia poruszanie puzzlami po planszy, zresetowanie obrazka i losowe pomieszanie puzzli
+ *
+ */
 public class GameControl {
 	
+	/**
+	 * szerokoœæ planszy
+	 */
 	public final  static  int   WIDTH = 5;
+	
+	/**
+	 * Plansza w postaci dwuwymiarowej tablicy stosów obiektów typu Puzzel
+	 * elementami tablicy s¹ stosy, bo zgodnie z zasadami projektu puzzle mo¿emy k³aœæ jeden na drugim w obrêbie tego samego pola
+	 */
 	private Stack<Puzzel> [][] board;
 	
-
+	/**
+	 * 
+	 */
+	GVControler controler;
+	
+	/**
+	 * Zlinkowanie kontrolera GV z kontrolerem gry
+	 * @param controler kontroler z którym bêdziemy linkowaæ
+	 */
+	public void linkController(GVControler controler)
+	{
+		this.controler = controler;
+	}
+	
+	/**
+	 * Konstruktor alokuje pamiêæ na stosy tworz¹ce planszê do gry
+	 */
 	GameControl()
 	{
 		board = (Stack <Puzzel>[][]) new Stack[GameControl.WIDTH][GameControl.WIDTH];
@@ -28,6 +50,9 @@ public class GameControl {
 		}
 	}
 	
+	/**
+	 * Funkcja dodaje puzzle na ich nominalne miejsce 
+	 */
 	public void AddPuzzles()
 	{
 		int id=1;
@@ -43,9 +68,11 @@ public class GameControl {
 					++id;
 				}
 			}
-			
 	}
 
+	/**
+	 * Funkcja generuje losowe ustawienie puzzli na planszy (w taki sposób ¿eby na ka¿dym polu by³ maksymalnie jeden puzzel)
+	 */
 	public void Randomize()
 	{
 		Random generator = new Random();
@@ -80,6 +107,10 @@ public class GameControl {
 		}
 	}
 	
+	/**
+	 * @TODO
+	 * Jak tylko bêdzie GUI to to usuwamy
+	 */
 	public void print()
 	{
 		for ( int i = 0; i < GameControl.WIDTH; ++i)
@@ -97,6 +128,12 @@ public class GameControl {
 		System.out.println();
 	}
 
+	/**
+	 * 
+	 * @param where w któr¹ stronê
+	 * @param x - wsp x klocka który bêdziemy ruszaæ
+	 * @param y - wsp y klocka, który bêdziemy ruszaæ
+	 */
 	public void move(Direction where, int x, int y)
 	{
 		if(board[x][y].isEmpty())
@@ -157,6 +194,12 @@ public class GameControl {
 			}
 		}
 	}
+	/**
+	 * Przesuniêcie pustego pola to tak naprawdê przesuniêcie odpowiedniego puzzla (stosu puzzli?) w odpowiednim kierunku
+	 * @param where w któr¹ stronê (góra dó³ prawo lewo)
+	 * @param x - wsp x wolnego pola, które chcemy przemieœciæ
+	 * @param y - wsp y wolnego pola które chcemy przemieœciæ
+	 */
 	
 	void moveHole( Direction where, int x, int y)
 	{
