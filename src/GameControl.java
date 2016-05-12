@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.awt.Point;
 import java.util.Random;
 import java.util.Stack;
 
@@ -47,6 +47,23 @@ public class GameControl {
 			{
 				board [i][j] = new Stack<Puzzel>() ;	
 			}
+		}
+	}
+	
+	/**
+	 * Funkcja dostarczaj¹ca informacje na temat danego miejsca na planszy
+	 * @param from wspó³rzêdne punktu, na temat ktrórego chcemy siê czegoœ dowiedzieæ
+	 * @return 0 jeœli pole jest puste, id puzzla, który jest na szczycie stosu  w przeciwynym przypadku
+	 */
+	public int getInfo(Point from)
+	{
+		if(board[from.x][from.y].isEmpty())
+		{
+			return 0;
+		}
+		else
+		{
+			return board[from.x][from.y].peek().getID();
 		}
 	}
 	
