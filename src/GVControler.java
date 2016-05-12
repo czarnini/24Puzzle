@@ -13,16 +13,6 @@ public class GVControler
 		view.linkController(this);
 		gameControl.linkController(this);
 	}
-	/*nie wiem czy uzyjê*/
-	void set(int i, int j)
-	{
-		view.setToMove(i,j);
-	}
-	/*nie wiem czy uzyjê*/
-	void put (int i, int j)
-	{
-		view.put(i,j);
-	}
 	void redraw (int i, int j, int ID)
 	{
 		view.redraw(i,j,ID);

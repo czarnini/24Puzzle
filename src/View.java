@@ -24,6 +24,8 @@ public class View
 	private int screenWidth, screenHeight;
 	boolean paused = false;
 	@SuppressWarnings({ "unchecked", "rawtypes" })
+/*wygenerowany polautomatycznie (WindowBuilder pro) widok, na ktory skaladaja sie guziki do obslugi
+ * oraz dwuwymiarowa tablica 25-1 guzikow (puzzli)*/
 	View()
 	{
 		mainFrame = new JFrame();
@@ -123,7 +125,7 @@ public class View
 		JButton btnHoletemp_1 = new JButton("holetemp2");
 		btnHoletemp_1.setBounds(666, 531, 97, 25);
 		mainFrame.getContentPane().add(btnHoletemp_1);
-//TABLICA[<--->][/\ \/]
+//schemat tablicy: TABLICA[<--->][/\ \/]
 		gameButtons = new JButton[boardWidth][boardHeight];
 		for (int j=0,k=1;j < boardWidth; ++j)
 		{
@@ -136,7 +138,7 @@ public class View
 				mainFrame.getContentPane().add(gameButtons[i][j]);
 			}
 		}
-		/*Dosc manualne ustawienie koloru, prawdopodobnie do usuniecia*/
+		/*Dosc manualne ustawienie koloru, prawdopodobnie do usuniecia lub zmiany na tekstury*/
 		gameButtons[0][0].setBackground(Color.GREEN);	
 		gameButtons[0][1].setBackground(new Color(173, 255, 47));	
 		gameButtons[0][2].setBackground(Color.YELLOW);
@@ -167,31 +169,37 @@ public class View
 		mainPanel = new JPanel();
 		mainFrame.setVisible(true);
 	}
-	
+/*funkcja laczaca widok z jego kontrolerem*/	
 	public void linkController(GVControler controler)
 	{
 		this.controler = controler;
 	}
-	
-	public void done()
+/*funkcja wywolywana przy zakonczeniu ukladania, resetuje ona dostepnosc przyciskow*/
+	void done()
 	{
 		btnPauza.setEnabled(false);
 		btnRozmieszaj.setEnabled(true);
 		btnRozwiaz.setEnabled(true);
 	}
-	void setToMove(int i, int j)
-	{
-		moveX = i;
-		moveY = j;
-	}
-	void put (int i, int j)
-	{
-		gameButtons[moveX][moveY].setBounds(80*(i+1), 80*(i+1), 80, 80);
-	}
+/*funkcja przerysowujaca klocek o ID na pozycje (x,y). Zaklada, ze klocek przerysowany jest tylko jeden, bez wzgledu na kolejnosc.
+ * Uzywana przy randomizacji, odswiezaniu widoku (przy klasycznej grze, ktora uniemozliwia kladzenie kolckow na siebie)*/	
 	void redraw (int x, int y, int ID)
 	{
-		int order = mainPanel.getComponentZOrder( gameButtons[(ID-1)%5][(int)(ID-1)/5]);
-		System.out.println("Order dla ID "+ID+" = "+order);
+		int order = mainFrame.getContentPane().getComponentZOrder( gameButtons[(ID-1)%5][(int)(ID-1)/5]);
+	//	System.out.println("Order dla ID "+ID+" = "+order);
+	//	int order2 = mainFrame.getContentPane().getComponentZOrder( gameButtons[x][y]);
+	//	System.out.println("Order dla pola docel = "+order2);
+	//	if (order2>order)
+	//	{
+		//	int tmp = order;
+		//	order = order2;
+		//	order2 = tmp;
+			mainFrame.getContentPane().setComponentZOrder(gameButtons[(ID-1)%5][(int)(ID-1)/5], 1);
+		//	mainFrame.getContentPane().setComponentZOrder(gameButtons[x][y], order);
+	//	}
 		gameButtons[(ID-1)%5][(int)(ID-1)/5].setBounds((x+1)*80, (y+1)*80, 80, 80);
+		mainFrame.getContentPane().setComponentZOrder(gameButtons[(ID-1)%5][(int)(ID-1)/5], order);
 	}
+	
+	
 }
