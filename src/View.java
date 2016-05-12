@@ -9,9 +9,8 @@ import java.awt.Color;
 
 public class View
 {
-	public final static int boardWidth = 5;
-	public final static int boardHeight = 5;
-	int moveX, moveY;
+	public final int boardWidth = 5;
+	public final int boardHeight = 5;
 	GVControler controler;
 	JPanel mainPanel;
 	JFrame mainFrame;
@@ -19,7 +18,7 @@ public class View
 	JButton btnPauza;
 	JButton btnRozwiaz;
 	JButton btnBoardField;
-	JButton gameButtons[][];
+	JButton gameButtons[][]; //tablica puzzli
 	
 	private int screenWidth, screenHeight;
 	boolean paused = false;
@@ -74,7 +73,7 @@ public class View
 				btnRozwiaz.setEnabled(false);
 				btnRozmieszaj.setEnabled(false);
 				btnPauza.setEnabled(true);
-				GVControler.solve();
+			//	GVControler.solve();
 			}
 		});
 		btnRozwiaz.setBounds(731, 124, 160, 40);
@@ -90,6 +89,46 @@ public class View
 		JComboBox comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"0,1", "0,2", "0,5", "1", "2", "5"}));
 		comboBox.setBounds(874, 236, 48, 22);
+		comboBox.setSelectedIndex(3);
+		comboBox.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0)
+			{
+				int i = comboBox.getSelectedIndex();
+				switch (i)
+				{
+				case 0:
+				{
+					controler.setClockTick(100);
+					break;
+				}
+				case 1:
+				{
+					controler.setClockTick(200);
+					break;
+				}
+				case 2:
+				{
+					controler.setClockTick(500);
+					break;
+				}
+				case 3:
+				{
+					controler.setClockTick(1000);
+					break;
+				}
+				case 4:
+				{
+					controler.setClockTick(2000);
+					break;
+				}
+				case 5:
+				{
+					controler.setClockTick(5000);
+					break;
+				}
+				}
+			}
+		});
 		mainFrame.getContentPane().add(comboBox);
 		
 		JLabel lblWykonujKolejnyKrok = new JLabel("Wykonuj kolejny krok co");
@@ -186,17 +225,7 @@ public class View
 	void redraw (int x, int y, int ID)
 	{
 		int order = mainFrame.getContentPane().getComponentZOrder( gameButtons[(ID-1)%5][(int)(ID-1)/5]);
-	//	System.out.println("Order dla ID "+ID+" = "+order);
-	//	int order2 = mainFrame.getContentPane().getComponentZOrder( gameButtons[x][y]);
-	//	System.out.println("Order dla pola docel = "+order2);
-	//	if (order2>order)
-	//	{
-		//	int tmp = order;
-		//	order = order2;
-		//	order2 = tmp;
-			mainFrame.getContentPane().setComponentZOrder(gameButtons[(ID-1)%5][(int)(ID-1)/5], 1);
-		//	mainFrame.getContentPane().setComponentZOrder(gameButtons[x][y], order);
-	//	}
+		mainFrame.getContentPane().setComponentZOrder(gameButtons[(ID-1)%5][(int)(ID-1)/5], 1);
 		gameButtons[(ID-1)%5][(int)(ID-1)/5].setBounds((x+1)*80, (y+1)*80, 80, 80);
 		mainFrame.getContentPane().setComponentZOrder(gameButtons[(ID-1)%5][(int)(ID-1)/5], order);
 	}
