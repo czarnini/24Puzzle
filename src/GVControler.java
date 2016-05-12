@@ -14,8 +14,23 @@ public class GVControler
 		gameControl.linkController(this);
 	}
 	
-	public void gameStart()
+	public static void randomize()
 	{
-		view.createFrame();
+		//TODO
+	}
+
+	public static void solve() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public static void pause() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public static void unPause() {
+		// TODO Auto-generated method stub
+		
 	}
 }
