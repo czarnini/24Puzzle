@@ -18,6 +18,7 @@ public class View
 	JButton btnRozmieszaj;
 	JButton btnPauza;
 	JButton btnRozwiaz;
+	JButton btnBoardField;
 	JButton gameButtons[][];
 	
 	private int screenWidth, screenHeight;
@@ -77,6 +78,12 @@ public class View
 		btnRozwiaz.setBounds(731, 124, 160, 40);
 		mainFrame.getContentPane().add(btnRozwiaz);
 		
+		btnBoardField = new JButton("");
+		btnBoardField.setBounds(80, 80, 400, 400);
+		btnBoardField.setEnabled(false);
+		btnBoardField.setBackground(Color.BLACK);
+		mainFrame.getContentPane().add(btnBoardField);
+		btnBoardField.setVisible(false);
 		
 		JComboBox comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"0,1", "0,2", "0,5", "1", "2", "5"}));
@@ -90,6 +97,32 @@ public class View
 		JLabel lblSekundy = new JLabel("sekund(y)");
 		lblSekundy.setBounds(924, 239, 56, 16);
 		mainFrame.getContentPane().add(lblSekundy);
+		
+		JButton btnMowtemp = new JButton("mowtemp");
+		btnMowtemp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				controler.move(Direction.left, 1, 0);
+			}
+		});
+		btnMowtemp.setBounds(666, 413, 97, 25);
+		mainFrame.getContentPane().add(btnMowtemp);
+		
+		JButton btnMowtemp_1 = new JButton("mowtemp2");
+		btnMowtemp_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controler.move(Direction.right, 0, 0);
+			}
+		});
+		btnMowtemp_1.setBounds(666, 455, 97, 25);
+		mainFrame.getContentPane().add(btnMowtemp_1);
+		
+		JButton btnHoletemp = new JButton("holetemp");
+		btnHoletemp.setBounds(666, 493, 97, 25);
+		mainFrame.getContentPane().add(btnHoletemp);
+		
+		JButton btnHoletemp_1 = new JButton("holetemp2");
+		btnHoletemp_1.setBounds(666, 531, 97, 25);
+		mainFrame.getContentPane().add(btnHoletemp_1);
 //TABLICA[<--->][/\ \/]
 		gameButtons = new JButton[boardWidth][boardHeight];
 		for (int j=0,k=1;j < boardWidth; ++j)
@@ -129,7 +162,7 @@ public class View
 		gameButtons[4][2].setBackground(Color.MAGENTA);
 		gameButtons[4][3].setBackground(new Color(128, 0, 128));
 		gameButtons[4][4].setBackground(Color.BLACK);
-		gameButtons[boardWidth-1][boardHeight-1].setText("");
+		gameButtons[boardWidth-1][boardHeight-1].setVisible(false);
 		
 		mainPanel = new JPanel();
 		mainFrame.setVisible(true);
@@ -157,22 +190,8 @@ public class View
 	}
 	void redraw (int x, int y, int ID)
 	{
-		String sID = ""+ID;
-		for (int j=0,k=1;j < boardWidth; ++j)
-		{
-			for (int i=0; i < boardHeight ; ++i, ++k)
-			{
-				System.out.println("ID= "+sID);
-				System.out.println("tekst= "+gameButtons[i][j].getText());
-			//	if (sID == gameButtons[i][j].getText())
-			//	{
-					System.out.println("*********************************************");
-					gameButtons[i][j].setBounds((i+1)*80, (j+1)*80, 80, 80);
-					return;
-			//	}
-		//		if (ID==0 && gameButtons[i][j].getText()=="")
-		//			gameButtons[i][j].setBounds((i+1)*80, (j+1)*80, 80, 80);
-			}
-		}
+		int order = mainPanel.getComponentZOrder( gameButtons[(ID-1)%5][(int)(ID-1)/5]);
+		System.out.println("Order dla ID "+ID+" = "+order);
+		gameButtons[(ID-1)%5][(int)(ID-1)/5].setBounds((x+1)*80, (y+1)*80, 80, 80);
 	}
 }

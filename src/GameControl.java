@@ -212,6 +212,7 @@ public class GameControl {
 				break;
 			}
 		}
+		redraw();
 	}
 	
 	public void redraw()
@@ -226,10 +227,8 @@ public class GameControl {
 				{
 					tmpPuzzel = board[i][j].peek();
 					ID = tmpPuzzel.getID();
+					controler.redraw(i,j,ID);
 				}
-				else
-					ID=0;
-				controler.redraw(i,j,ID);
 			}
 		}
 	}
@@ -300,5 +299,6 @@ public class GameControl {
 				break;
 			}
 		}
+		redraw();
 	}
 }

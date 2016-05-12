@@ -3,13 +3,13 @@ import javax.swing.Timer;
 public class GVControler
 {
 	View view;
-	GameControl gameControl;
+	static GameControl gameControl;
 	Timer timer;
 	
 	GVControler (GameControl gameControl, View view)
 	{
 		this.view = view;
-		this.gameControl = gameControl;
+		GVControler.gameControl = gameControl;
 		view.linkController(this);
 		gameControl.linkController(this);
 	}
@@ -29,7 +29,7 @@ public class GVControler
 	}
 	public static void randomize()
 	{
-		//TODO
+		gameControl.randomize();
 	}
 
 	public static void solve() {
@@ -45,5 +45,9 @@ public class GVControler
 	public static void unPause() {
 		// TODO Auto-generated method stub
 		
+	}
+	public void move(Direction where, int i, int j)
+	{
+		gameControl.move(where, i, j);
 	}
 }
