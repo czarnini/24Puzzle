@@ -12,7 +12,10 @@ public class _24Puzzle {
 		game.AddPuzzles();
 		Point tmp = algContr.findBlank();
 		game.print();
+		game.randomize();
 		game.move(Direction.left, 1, 0);
+		game.print();
+		game.move(Direction.right, 0, 0);
 		game.print();
 
 		tmp = algContr.findBlank();

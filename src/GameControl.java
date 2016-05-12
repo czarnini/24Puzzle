@@ -90,7 +90,7 @@ public class GameControl {
 	/**
 	 * Funkcja generuje losowe ustawienie puzzli na planszy (w taki sposób ¿eby na ka¿dym polu by³ maksymalnie jeden puzzel)
 	 */
-	public void Randomize()
+	public void randomize()
 	{
 		Random generator = new Random();
 		Puzzel tmpPuzzel;
@@ -122,6 +122,8 @@ public class GameControl {
 				}
 			}
 		}
+		print();
+		redraw();
 	}
 	
 	/**
@@ -208,6 +210,26 @@ public class GameControl {
 					board[x][y+1].push(board[x][y].pop());
 				}
 				break;
+			}
+		}
+	}
+	
+	public void redraw()
+	{
+		Puzzel tmpPuzzel;
+		int ID;
+		for ( int i = 0; i < GameControl.WIDTH; ++i)
+		{
+			for(int j=0; j<GameControl.WIDTH; ++j)
+			{
+				if (board[i][j].size()!=0)
+				{
+					tmpPuzzel = board[i][j].peek();
+					ID = tmpPuzzel.getID();
+				}
+				else
+					ID=0;
+				controler.redraw(i,j,ID);
 			}
 		}
 	}
