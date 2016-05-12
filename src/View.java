@@ -88,6 +88,7 @@ public class View
 		mainFrame.getContentPane().add(lblSekundy);
 		
 		mainPanel = new JPanel();
+		mainFrame.setVisible(true);
 	}
 	
 	public void linkController(GVControler controler)
