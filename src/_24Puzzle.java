@@ -7,7 +7,8 @@ public class _24Puzzle {
 		GameControl game = new GameControl();
 		Algorithm algorithm = new Algorithm();
 		AlgorithmControler algContr = new AlgorithmControler(algorithm, game);
-		
+		View view = new View();
+		GVControler GVContr = new GVControler(game, view);
 		game.AddPuzzles();
 		Point tmp = algContr.findBlank();
 		game.print();
