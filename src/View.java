@@ -40,7 +40,7 @@ public class View
 		btnRozmieszaj = new JButton("Rozmieszaj");
 		btnRozmieszaj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				GVControler.randomize();
+				controler.randomize();
 			}
 		});
 		btnRozmieszaj.setBounds(731, 71, 160, 40);
@@ -51,13 +51,13 @@ public class View
 			public void actionPerformed(ActionEvent e) {
 				if (!paused)
 				{
-					GVControler.pause();
+					controler.pause();
 					paused = true;
 					btnPauza.setText("Wznow");
 				}
 				else
 				{
-					GVControler.unPause();
+					controler.unPause();
 					paused = false;
 					btnPauza.setText("Pauza");
 				}
@@ -73,7 +73,7 @@ public class View
 				btnRozwiaz.setEnabled(false);
 				btnRozmieszaj.setEnabled(false);
 				btnPauza.setEnabled(true);
-			//	GVControler.solve();
+				controler.solve();
 			}
 		});
 		btnRozwiaz.setBounds(731, 124, 160, 40);

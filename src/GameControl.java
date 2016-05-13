@@ -153,19 +153,20 @@ public class GameControl {
 	 * @param x - wsp x klocka który bêdziemy ruszaæ
 	 * @param y - wsp y klocka, który bêdziemy ruszaæ
 	 */
-	public void move(Direction where, int x, int y)
+	Point move(Direction where, int x, int y)
 	{
 		if(board[x][y].isEmpty())
 		{
-			return;
+			return new Point(-1,-1);
 		}
+		Point p = new Point(-1,-1);
 		switch(where)
 		{
 			case left:
 			{
 				if(x == 0)
 				{
-					return;
+					p = new Point (x-1,y);
 				}
 				else
 				{
@@ -177,7 +178,7 @@ public class GameControl {
 			{
 				if(x == GameControl.WIDTH-1)
 				{
-					return;
+					p = new Point (x+1,y);
 				}
 				else
 				{
@@ -190,7 +191,7 @@ public class GameControl {
 			{
 				if(y == 0)
 				{
-					return;
+					p = new Point (x,y-1);
 				}
 				else
 				{
@@ -203,7 +204,7 @@ public class GameControl {
 			{
 				if(y == GameControl.WIDTH-1)
 				{
-					return;
+					p = new Point (x,y+1);
 				}
 				else
 				{
@@ -213,6 +214,7 @@ public class GameControl {
 			}
 		}
 		redraw();
+		return p;
 	}
 	
 	public void redraw()
@@ -239,19 +241,20 @@ public class GameControl {
 	 * @param y - wsp y wolnego pola które chcemy przemieœciæ
 	 */
 	
-	void moveHole( Direction where, int x, int y)
+	Point moveHole( Direction where, int x, int y)
 	{
 		if(!board[x][y].isEmpty())
 		{
-			return;
+			return new Point(-1,-1);
 		}
+		Point p = new Point (-1,-1);
 		switch(where)
 		{
 			case left:
 			{
 				if(x == 0 || board[x-1][y].size()>1)
 				{
-					return;
+					p= new Point(x-1,y);
 				}
 				else
 				{
@@ -264,7 +267,7 @@ public class GameControl {
 			{
 				if(x == GameControl.WIDTH-1 || board[x+1][y].size()>1)
 				{
-					return;
+					p= new Point (x+1,y);
 				}
 				else
 				{
@@ -277,7 +280,7 @@ public class GameControl {
 			{
 				if(y == GameControl.WIDTH-1 || board[x][y+1].size()>1)
 				{
-					return;
+					p= new Point(x,y+1);
 				}
 				else
 				{
@@ -290,7 +293,7 @@ public class GameControl {
 			{
 				if(y == 0 || board[x][y-1].size()>1)
 				{
-					return;
+					p= new Point (x,y-1);
 				}
 				else
 				{
@@ -300,5 +303,6 @@ public class GameControl {
 			}
 		}
 		redraw();
+		return p;
 	}
 }

@@ -1,5 +1,5 @@
-import java.awt.List;
 import java.awt.Point;
+import java.util.ArrayList;
 
 /**
  * Klasa maj¹ca na celu przekazywanie danych z gry do algorytmu
@@ -10,7 +10,7 @@ import java.awt.Point;
 public class AlgorithmControler {
 	Algorithm algorithm = new Algorithm();
 	GameControl game = new GameControl();
-	List  stepSolution;
+	ArrayList<Direction>  stepSolution;
 	
 	public AlgorithmControler(Algorithm algorithm, GameControl game) 
 	{
@@ -34,6 +34,7 @@ public class AlgorithmControler {
 		stepSolution = algorithm.solve();
 	}
 
+	@SuppressWarnings("unused")
 	public Point findPuzzel (int id)
 	{
 		Point tmp = new Point(0,0);
@@ -50,6 +51,7 @@ public class AlgorithmControler {
 		return new Point(-1,-1);
 	}
 	
+	@SuppressWarnings("unused")
 	public Point findBlank()
 	{
 		Point tmp = new Point(0,0);
@@ -67,6 +69,40 @@ public class AlgorithmControler {
 	}
 
 	public void solveGame()
+	{
+		for (int i=0; i<(GameControl.WIDTH*GameControl.WIDTH-1); ++i)
+		{
+			for (int j=0; j<2; ++j)
+			{
+				Point end = new Point((i%GameControl.WIDTH),(int)i/GameControl.WIDTH);
+				sendFinishPoint(end);
+				if (j==0) //move hole
+				{
+					Point start = findBlank(), current = findBlank();
+					sendStartPoint(start);
+					solveStep();
+					for (int k=0; k<stepSolution.size(); ++k)
+					{
+						current = game.moveHole(stepSolution.get(k), current.x, current.y);
+					}
+					
+				}
+				else //move puzzel
+				{
+					Point current = findPuzzel(i+1), start = findPuzzel(i+1);
+					sendStartPoint(start);
+					solveStep();
+					for (int k=0; k<stepSolution.size(); ++k)
+					{
+						current = game.move(stepSolution.get(k), current.x, current.y);
+					}
+				}
+					
+			}
+		}
+	}
+	
+	public void sendSolution()
 	{
 		
 	}

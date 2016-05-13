@@ -1,4 +1,4 @@
-import java.awt.List;
+import java.util.ArrayList;
 
 /**
  * Klasa reprezentuj¹ca algorytm, którego celem jest wyznaczenie najkrótszej œcie¿ki (sekwencji ruchów prawo/lewo/góra/dó³
@@ -10,9 +10,9 @@ import java.awt.List;
 public class Algorithm 
 {
 	
-	public List solve()
+	public ArrayList<Direction> solve()
 	{
-		List solution = new List();
+		ArrayList<Direction> solution = new ArrayList<Direction>();
 		
 		return solution;
 	}

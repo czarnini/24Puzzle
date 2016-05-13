@@ -6,13 +6,13 @@ import javax.swing.Timer;
 public class GVControler implements ActionListener
 {
 	View view;
-	static GameControl gameControl;
-	static Timer timer;
-	static int clockTick = 1000; //(ms)
+	GameControl gameControl;
+	Timer timer;
+	int clockTick = 1000; //(ms)
 	GVControler (GameControl gameControl, View view)
 	{
 		this.view = view;
-		GVControler.gameControl = gameControl;
+		this.gameControl = gameControl;
 		view.linkController(this);
 		gameControl.linkController(this);
 		timer = new Timer (clockTick, this);
@@ -21,7 +21,7 @@ public class GVControler implements ActionListener
 	{
 		view.redraw(i,j,ID);
 	}
-	public static void randomize()
+	public void randomize()
 	{
 		gameControl.randomize();
 	}
@@ -32,11 +32,11 @@ public class GVControler implements ActionListener
 		//TODO: tu na pewno cos jeszcze bedzie...
 	}
 
-	public static void pause() {
+	public void pause() {
 		timer.stop();
 	}
 
-	public static void unPause() {
+	public void unPause() {
 		timer.start();
 	}
 	public void move(Direction where, int i, int j)
@@ -47,10 +47,12 @@ public class GVControler implements ActionListener
 	public void setClockTick(int i)
 	{
 		clockTick = i;
+		timer.setDelay(clockTick);
 		System.out.println("clockTick: "+i);
 	}
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
+		System.out.println("BBBB"+clockTick);
 		// TODO tu bêdzie zewnêtrzne wyjœcie pod tytu³em "zrób nastêpny krok":
 		//powiedz grze zeby zrobila krok
 		//spytaj gre czy ukladanka jest rozwiazana
