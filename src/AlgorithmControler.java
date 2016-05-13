@@ -21,12 +21,12 @@ public class AlgorithmControler {
 	
 	public void sendStartPoint(Point start)
 	{
-		//algorithm.setStart(start);
+		algorithm.setStart(start);
 	}
 	
-	public void sendFinishPoint(Point finish)
+	public void sendFinishPoint(Point end)
 	{
-		//algorithm.setFinish(finish);
+		algorithm.setEnd(end);
 	}
 	
 	public void solveStep()
@@ -34,7 +34,6 @@ public class AlgorithmControler {
 		stepSolution = algorithm.solve();
 	}
 
-	@SuppressWarnings("unused")
 	public Point findPuzzel (int id)
 	{
 		Point tmp = new Point(0,0);
@@ -44,14 +43,13 @@ public class AlgorithmControler {
 			{
 				tmp.x=i;
 				tmp.y=j;
-				if(id == game.getInfo(tmp));
+				if(id == game.getInfo(tmp))
 					return tmp;
 			}
 		}
 		return new Point(-1,-1);
 	}
 	
-	@SuppressWarnings("unused")
 	public Point findBlank()
 	{
 		Point tmp = new Point(0,0);
@@ -61,7 +59,7 @@ public class AlgorithmControler {
 			{
 				tmp.x=i;
 				tmp.y=j;
-				if(0 == game.getInfo(tmp));
+				if(0 == game.getInfo(tmp))
 					return tmp;
 			}
 		}
@@ -101,4 +99,8 @@ public class AlgorithmControler {
 			}
 		}
 	}
+	
+	
+	
+
 }

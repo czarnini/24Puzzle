@@ -78,7 +78,7 @@ public class GameControl {
 				for(int j=0; j<GameControl.WIDTH; ++j)
 				{
 					Puzzel newPuzzel = new Puzzel(id);
-					board[i][j].push(newPuzzel);
+					board[j][i].push(newPuzzel);
 					
 					if(id == 24)
 						break;
@@ -166,11 +166,12 @@ public class GameControl {
 			{
 				if(x == 0)
 				{
-					p = new Point (x-1,y);
+					p = new Point (x,y);
 				}
 				else
 				{
 					board[x-1][y].push(board[x][y].pop());
+					p = new Point (x-1,y);
 				}
 				break;
 			}
@@ -178,12 +179,13 @@ public class GameControl {
 			{
 				if(x == GameControl.WIDTH-1)
 				{
-					p = new Point (x+1,y);
+					p = new Point (x,y);
 				}
 				else
 				{
 
 					board[x+1][y].push(board[x][y].pop());
+					p = new Point (x+1,y);
 				}
 				break;
 			}
@@ -191,12 +193,13 @@ public class GameControl {
 			{
 				if(y == 0)
 				{
-					p = new Point (x,y-1);
+					p = new Point (x,y);
 				}
 				else
 				{
 
 					board[x][y-1].push(board[x][y].pop());
+					p = new Point (x,y-1);
 				}
 				break;
 			}
@@ -204,11 +207,12 @@ public class GameControl {
 			{
 				if(y == GameControl.WIDTH-1)
 				{
-					p = new Point (x,y+1);
+					p = new Point (x,y);
 				}
 				else
 				{
 					board[x][y+1].push(board[x][y].pop());
+					p = new Point (x,y+1);
 				}
 				break;
 			}
@@ -254,11 +258,12 @@ public class GameControl {
 			{
 				if(x == 0 || board[x-1][y].size()>1)
 				{
-					p= new Point(x-1,y);
+					p= new Point(x,y);
 				}
 				else
 				{
 					move(Direction.right, x-1, y);
+					p= new Point(x-1,y);
 				}
 				break;
 			}
@@ -267,11 +272,12 @@ public class GameControl {
 			{
 				if(x == GameControl.WIDTH-1 || board[x+1][y].size()>1)
 				{
-					p= new Point (x+1,y);
+					p= new Point (x,y);
 				}
 				else
 				{
 					move(Direction.left, x+1, y);
+					p= new Point (x+1,y);
 				}
 				break;
 			}
@@ -280,11 +286,12 @@ public class GameControl {
 			{
 				if(y == GameControl.WIDTH-1 || board[x][y+1].size()>1)
 				{
-					p= new Point(x,y+1);
+					p= new Point(x,y);
 				}
 				else
 				{
 					move(Direction.up, x, y+1);
+					p= new Point(x,y+1);
 				}
 				break;
 			}
@@ -293,11 +300,12 @@ public class GameControl {
 			{
 				if(y == 0 || board[x][y-1].size()>1)
 				{
-					p= new Point (x,y-1);
+					p= new Point (x,y);
 				}
 				else
 				{
 					move(Direction.down, x, y-1);
+					p= new Point (x,y-1);
 				}
 				break;
 			}
