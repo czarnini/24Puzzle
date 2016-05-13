@@ -101,12 +101,4 @@ public class AlgorithmControler {
 			}
 		}
 	}
-	
-	public void sendSolution()
-	{
-		
-	}
-	
-	
-
 }
