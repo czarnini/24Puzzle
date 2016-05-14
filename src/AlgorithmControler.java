@@ -1,5 +1,9 @@
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
+
+import javax.swing.Timer;
 
 /**
  * Klasa maj¹ca na celu przekazywanie danych z gry do algorytmu
@@ -7,17 +11,21 @@ import java.util.ArrayList;
  * Zastanawiam siê, czy metody, które tu umieœci³em nie powinny byæ w³aœnie w tym "abstrakcyjnym interfejsie",
  *  a klasa Algorithm implementowa³aby ten interfejs
  */
-public class AlgorithmControler {
-	Algorithm algorithm = new Algorithm();
-	GameControl game = new GameControl();
+public class AlgorithmControler implements ActionListener
+{
+	Algorithm algorithm;
+	GameControl game;
+	Timer timer;
+	private int clockTick = 500;//ms
 	ArrayList<Direction>  stepSolution;
 	
-	public AlgorithmControler(Algorithm algorithm, GameControl game) 
+	AlgorithmControler(GameControl game) 
 	{
-		this.algorithm = algorithm;
+		algorithm = new Algorithm();
 		this.game = game;
+		game.linkAlgController(this);
+		timer = new Timer (clockTick, this);
 	}
-	
 	
 	public void sendStartPoint(Point start)
 	{
@@ -29,7 +37,7 @@ public class AlgorithmControler {
 		algorithm.setEnd(end);
 	}
 	
-	public void solveStep()
+	public void solveStage()
 	{
 		stepSolution = algorithm.solve();
 	}
@@ -66,41 +74,66 @@ public class AlgorithmControler {
 		return new Point(-1,-1);
 	}
 
-	public void solveGame()
+	public void solveGame() throws InterruptedException
 	{
 		for (int i=0; i<(GameControl.WIDTH*GameControl.WIDTH-1); ++i)
 		{
 			for (int j=0; j<2; ++j)
 			{
 				Point end = new Point((i%GameControl.WIDTH),(int)i/GameControl.WIDTH);
-				sendFinishPoint(end);
-				if (j==0) //move hole
-				{
-					Point start = findBlank(), current = findBlank();
-					sendStartPoint(start);
-					solveStep();
-					for (int k=0; k<stepSolution.size(); ++k)
+				Point tmp = findPuzzel(i+1);
+				if (end.x!=tmp.x || end.y!=tmp.y)
+				{	
+					sendFinishPoint(end);
+					if (j==0) //move hole
 					{
-						current = game.moveHole(stepSolution.get(k), current.x, current.y);
+						Point start = findBlank(), current = findBlank();
+						sendStartPoint(start);
+						solveStage();
+						for (int k=0; k<stepSolution.size(); ++k)
+						{
+							current = game.moveHole(stepSolution.get(k), current.x, current.y);
+							Thread.sleep(clockTick);
+						}
+						
 					}
-					
-				}
-				else //move puzzel
-				{
-					Point current = findPuzzel(i+1), start = findPuzzel(i+1);
-					sendStartPoint(start);
-					solveStep();
-					for (int k=0; k<stepSolution.size(); ++k)
+					else //move puzzel
 					{
-						current = game.move(stepSolution.get(k), current.x, current.y);
+						Point current = findPuzzel(i+1), start = findPuzzel(i+1);
+						sendStartPoint(start);
+						solveStage();
+						for (int k=0; k<stepSolution.size(); ++k)
+						{
+							current = game.move(stepSolution.get(k), current.x, current.y);
+							Thread.sleep(clockTick);
+						}
 					}
 				}
 					
 			}
 		}
+		game.done();
+	}
+
+	public void pause()
+	{
+		timer.stop();
+	}
+
+	public void unPause()
+	{
+		timer.start();
 	}
 	
-	
-	
-
+	public void setClockTick(int i)
+	{
+		clockTick = i;
+		timer.setDelay(clockTick);
+		System.out.println("clockTick: "+i);
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 }

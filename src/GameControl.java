@@ -24,6 +24,7 @@ public class GameControl {
 	 * 
 	 */
 	GVControler controler;
+	AlgorithmControler algContr;
 	
 	/**
 	 * Zlinkowanie kontrolera GV z kontrolerem gry
@@ -32,6 +33,11 @@ public class GameControl {
 	public void linkController(GVControler controler)
 	{
 		this.controler = controler;
+	}
+	
+	public void linkAlgController(AlgorithmControler algorithmControler) {
+		this.algContr = algorithmControler;
+		
 	}
 	
 	/**
@@ -217,6 +223,7 @@ public class GameControl {
 				break;
 			}
 		}
+		controler.updateSteps();
 		redraw();
 		return p;
 	}
@@ -310,7 +317,32 @@ public class GameControl {
 				break;
 			}
 		}
+		controler.updateSteps();
 		redraw();
 		return p;
+	}
+	
+	public void pause()
+	{
+		algContr.pause();
+	}
+	
+	public void unPause()
+	{
+		algContr.unPause();
+	}
+	
+	public void solve() throws InterruptedException
+	{
+		algContr.solveGame();
+	}
+
+	public void setClockTick(int i)
+	{
+		algContr.setClockTick(i);
+	}
+
+	public void done() {
+		controler.done();
 	}
 }
