@@ -19,9 +19,10 @@ public class View
 	JButton btnRozwiaz;
 	JButton btnBoardField;
 	JButton gameButtons[][]; //tablica puzzli
-	
+	private int stepsNo = 0;
 	private int screenWidth, screenHeight;
 	boolean paused = false;
+	JLabel lblSteps;
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 /*wygenerowany polautomatycznie (WindowBuilder pro) widok, na ktory skaladaja sie guziki do obslugi
  * oraz dwuwymiarowa tablica 25-1 guzikow (puzzli)*/
@@ -36,10 +37,13 @@ public class View
 		mainFrame.setBounds((screenWidth/2)-500, (screenHeight/2)-350, 1000, 700);
 		mainFrame.setResizable(false);
 		mainFrame.getContentPane().setLayout(null);
+		btnRozwiaz = new JButton("Rozwi\u0105\u017C");
 		
 		btnRozmieszaj = new JButton("Rozmieszaj");
 		btnRozmieszaj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				lblSteps.setText(""+stepsNo);
+				btnRozwiaz.setEnabled(true);
 				controler.randomize();
 			}
 		});
@@ -67,13 +71,16 @@ public class View
 		btnPauza.setBounds(731, 177, 160, 40);
 		mainFrame.getContentPane().add(btnPauza);
 		
-		btnRozwiaz = new JButton("Rozwi\u0105\u017C");
 		btnRozwiaz.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				btnRozwiaz.setEnabled(false);
 				btnRozmieszaj.setEnabled(false);
 				btnPauza.setEnabled(true);
-				controler.solve();
+				try {
+					controler.solve();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
 		});
 		btnRozwiaz.setBounds(731, 124, 160, 40);
@@ -89,7 +96,7 @@ public class View
 		JComboBox comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"0,1", "0,2", "0,5", "1", "2", "5"}));
 		comboBox.setBounds(874, 236, 48, 22);
-		comboBox.setSelectedIndex(3);
+		comboBox.setSelectedIndex(2);
 		comboBox.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0)
 			{
@@ -139,31 +146,14 @@ public class View
 		lblSekundy.setBounds(924, 239, 56, 16);
 		mainFrame.getContentPane().add(lblSekundy);
 		
-		JButton btnMowtemp = new JButton("mowtemp");
-		btnMowtemp.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				controler.move(Direction.left, 1, 0);
-			}
-		});
-		btnMowtemp.setBounds(666, 413, 97, 25);
-		mainFrame.getContentPane().add(btnMowtemp);
+		JLabel lblLiczbaKrokw = new JLabel("Liczba krok\u00F3w: ");
+		lblLiczbaKrokw.setBounds(731, 287, 89, 16);
+		mainFrame.getContentPane().add(lblLiczbaKrokw);
 		
-		JButton btnMowtemp_1 = new JButton("mowtemp2");
-		btnMowtemp_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				controler.move(Direction.right, 0, 0);
-			}
-		});
-		btnMowtemp_1.setBounds(666, 455, 97, 25);
-		mainFrame.getContentPane().add(btnMowtemp_1);
+		lblSteps = new JLabel("0");
+		lblSteps.setBounds(874, 287, 56, 16);
+		mainFrame.getContentPane().add(lblSteps);
 		
-		JButton btnHoletemp = new JButton("holetemp");
-		btnHoletemp.setBounds(666, 493, 97, 25);
-		mainFrame.getContentPane().add(btnHoletemp);
-		
-		JButton btnHoletemp_1 = new JButton("holetemp2");
-		btnHoletemp_1.setBounds(666, 531, 97, 25);
-		mainFrame.getContentPane().add(btnHoletemp_1);
 //schemat tablicy: TABLICA[<--->][/\ \/]
 		gameButtons = new JButton[boardWidth][boardHeight];
 		for (int j=0,k=1;j < boardWidth; ++j)
@@ -218,7 +208,8 @@ public class View
 	{
 		btnPauza.setEnabled(false);
 		btnRozmieszaj.setEnabled(true);
-		btnRozwiaz.setEnabled(true);
+		btnRozwiaz.setEnabled(false);
+		stepsNo = 0;
 	}
 /*funkcja przerysowujaca klocek o ID na pozycje (x,y). Zaklada, ze klocek przerysowany jest tylko jeden, bez wzgledu na kolejnosc.
  * Uzywana przy randomizacji, odswiezaniu widoku (przy klasycznej grze, ktora uniemozliwia kladzenie kolckow na siebie)*/	
@@ -230,5 +221,9 @@ public class View
 		mainFrame.getContentPane().setComponentZOrder(gameButtons[(ID-1)%5][(int)(ID-1)/5], order);
 	}
 	
-	
+	void updateSteps()
+	{
+		++stepsNo;
+		lblSteps.setText(""+stepsNo);
+	}
 }

@@ -1,21 +1,14 @@
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-import javax.swing.Timer;
-
-public class GVControler implements ActionListener
+public class GVControler
 {
 	View view;
 	GameControl gameControl;
-	Timer timer;
-	int clockTick = 1000; //(ms)
-	GVControler (GameControl gameControl, View view)
+	GVControler (GameControl gameControl)
 	{
-		this.view = view;
+		view = new View();
 		this.gameControl = gameControl;
 		view.linkController(this);
 		gameControl.linkController(this);
-		timer = new Timer (clockTick, this);
 	}
 	void redraw (int i, int j, int ID)
 	{
@@ -26,18 +19,17 @@ public class GVControler implements ActionListener
 		gameControl.randomize();
 	}
 
-	public void solve()
+	public void solve() throws InterruptedException
 	{
-		timer.start();
-		//TODO: tu na pewno cos jeszcze bedzie...
+		gameControl.solve();
 	}
 
 	public void pause() {
-		timer.stop();
+		gameControl.pause();
 	}
 
 	public void unPause() {
-		timer.start();
+		gameControl.unPause();
 	}
 	public void move(Direction where, int i, int j)
 	{
@@ -46,17 +38,12 @@ public class GVControler implements ActionListener
 	
 	public void setClockTick(int i)
 	{
-		clockTick = i;
-		timer.setDelay(clockTick);
-		System.out.println("clockTick: "+i);
+		gameControl.setClockTick(i);
 	}
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		System.out.println("BBBB"+clockTick);
-		// TODO tu bêdzie zewnêtrzne wyjœcie pod tytu³em "zrób nastêpny krok":
-		//powiedz grze zeby zrobila krok
-		//spytaj gre czy ukladanka jest rozwiazana
-		//jezeli TAK: view.done(); timer.stop();
-		
+	public void updateSteps() {
+		view.updateSteps();
+	}
+	public void done() {
+		view.done();		
 	}
 }
