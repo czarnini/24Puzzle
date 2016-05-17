@@ -317,7 +317,7 @@ public class GameControl {
 				break;
 			}
 		}
-		controler.updateSteps();
+	//	controler.updateSteps();
 		redraw();
 		return p;
 	}
