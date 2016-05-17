@@ -3,8 +3,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import javax.swing.Timer;
-
 /**
  * Klasa maj¹ca na celu przekazywanie danych z gry do algorytmu
  * 
@@ -15,8 +13,9 @@ public class AlgorithmControler implements ActionListener
 {
 	Algorithm algorithm;
 	GameControl game;
-	Timer timer;
 	private int clockTick = 500;//ms
+	private int pauseTick = 500; /** wartoœæ timera w przypadku u¿ycia pauzy*/
+	private boolean paused = false;
 	ArrayList<Direction>  stepSolution;
 	
 	AlgorithmControler(GameControl game) 
@@ -24,7 +23,6 @@ public class AlgorithmControler implements ActionListener
 		algorithm = new Algorithm();
 		this.game = game;
 		game.linkAlgController(this);
-		timer = new Timer (clockTick, this);
 	}
 	
 	public void sendStartPoint(Point start)
@@ -92,6 +90,7 @@ public class AlgorithmControler implements ActionListener
 						solveStage();
 						for (int k=0; k<stepSolution.size(); ++k)
 						{
+							while (paused) Thread.sleep(pauseTick);
 							current = game.moveHole(stepSolution.get(k), current.x, current.y);
 							Thread.sleep(clockTick);
 						}
@@ -104,6 +103,7 @@ public class AlgorithmControler implements ActionListener
 						solveStage();
 						for (int k=0; k<stepSolution.size(); ++k)
 						{
+							while (paused) Thread.sleep(pauseTick);
 							current = game.move(stepSolution.get(k), current.x, current.y);
 							Thread.sleep(clockTick);
 						}
@@ -117,18 +117,17 @@ public class AlgorithmControler implements ActionListener
 
 	public void pause()
 	{
-		timer.stop();
+		paused = true;
 	}
 
 	public void unPause()
 	{
-		timer.start();
+		paused = false;
 	}
 	
 	public void setClockTick(int i)
 	{
 		clockTick = i;
-		timer.setDelay(clockTick);
 		System.out.println("clockTick: "+i);
 	}
 	@Override

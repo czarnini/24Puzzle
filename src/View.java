@@ -67,7 +67,7 @@ public class View
 				}
 			}
 		});
-		btnPauza.setEnabled(false);
+	//	btnPauza.setEnabled(false);
 		btnPauza.setBounds(731, 177, 160, 40);
 		mainFrame.getContentPane().add(btnPauza);
 		

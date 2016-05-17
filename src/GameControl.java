@@ -43,6 +43,7 @@ public class GameControl {
 	/**
 	 * Konstruktor alokuje pamiêæ na stosy tworz¹ce planszê do gry
 	 */
+	@SuppressWarnings("unchecked")
 	GameControl()
 	{
 		board = (Stack <Puzzel>[][]) new Stack[GameControl.WIDTH][GameControl.WIDTH];
