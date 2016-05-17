@@ -1,10 +1,13 @@
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.Color;
 
 public class View
@@ -19,6 +22,7 @@ public class View
 	JButton btnRozwiaz;
 	JButton btnBoardField;
 	JButton gameButtons[][]; //tablica puzzli
+	Image texture[];
 	private int stepsNo = 0;
 	private int screenWidth, screenHeight;
 	boolean paused = false;
@@ -26,7 +30,7 @@ public class View
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 /*wygenerowany polautomatycznie (WindowBuilder pro) widok, na ktory skaladaja sie guziki do obslugi
  * oraz dwuwymiarowa tablica 25-1 guzikow (puzzli)*/
-	View()
+	View() throws IOException
 	{
 		mainFrame = new JFrame();
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -160,15 +164,17 @@ public class View
 		{
 			for (int i=0; i < boardHeight ; ++i, ++k)
 			{
+		//		texture[k-1] = ImageIO.read("textures/1.png");
 				gameButtons[i][j] = new JButton(String.valueOf(k));
 				gameButtons[i][j].setEnabled(false);
 				gameButtons[i][j].setFont(new Font("Tahoma", Font.PLAIN, 30));
 				gameButtons[i][j].setBounds(80*(i+1), 80*(j+1), 80, 80);
+		//		gameButtons[i][j].setIcon(new ImageIcon (texture[k-1]));
 				mainFrame.getContentPane().add(gameButtons[i][j]);
 			}
 		}
 		/*Dosc manualne ustawienie koloru, prawdopodobnie do usuniecia lub zmiany na tekstury*/
-		gameButtons[0][0].setBackground(Color.GREEN);	
+/*		gameButtons[0][0].setBackground(Color.GREEN);	
 		gameButtons[0][1].setBackground(new Color(173, 255, 47));	
 		gameButtons[0][2].setBackground(Color.YELLOW);
 		gameButtons[0][3].setBackground(new Color(255, 215, 0));
@@ -192,8 +198,9 @@ public class View
 		gameButtons[4][1].setBackground(new Color(138, 43, 226));
 		gameButtons[4][2].setBackground(Color.MAGENTA);
 		gameButtons[4][3].setBackground(new Color(128, 0, 128));
-		gameButtons[4][4].setBackground(Color.BLACK);
+		gameButtons[4][4].setBackground(Color.BLACK);*/
 		gameButtons[boardWidth-1][boardHeight-1].setVisible(false);
+		
 		
 		mainPanel = new JPanel();
 		mainFrame.setVisible(true);

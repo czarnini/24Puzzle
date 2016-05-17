@@ -1,19 +1,18 @@
-import java.awt.Point;
+import java.io.IOException;
 
 public class _24Puzzle {
 //Event Dispatch thread???
-	public static void main(String[] args) throws InterruptedException 
+	@SuppressWarnings("unused")
+	public static void main(String[] args) throws InterruptedException, IOException 
 	{
 		
 			GameControl game = new GameControl();
 			AlgorithmControler algContr = new AlgorithmControler(game);
 			GVControler GVContr = new GVControler(game);
 			game.AddPuzzles();
-			Point tmp = algContr.findBlank();
 			game.print();
 			game.randomize();
 			game.print();
-			
 			algContr.solveGame();
 			game.print();
 	}

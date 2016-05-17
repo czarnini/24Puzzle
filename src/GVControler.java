@@ -1,3 +1,5 @@
+import java.io.IOException;
+
 /** 
  * Klasa kontrolera miêdzy widokiem gry a modelem gry. Zajmuje siê ³¹czeniem widoku z gr¹ (aby stanowi³y 2 niezalezne modu³y)
  * oraz przekazywaniem poleceñ miêdzy widokiem a gr¹*/
@@ -8,8 +10,9 @@ public class GVControler
 	/**
 	 * Konstruktor klasy, ³¹cz¹cy ze sob¹ powi¹zane klasy
 	 * @param gameControl - model gry
+	 * @throws IOException 
 	 */
-	GVControler (GameControl gameControl)
+	GVControler (GameControl gameControl) throws IOException
 	{
 		view = new View();
 		this.gameControl = gameControl;

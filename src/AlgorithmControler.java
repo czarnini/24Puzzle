@@ -14,7 +14,6 @@ public class AlgorithmControler implements ActionListener
 	Algorithm algorithm;
 	GameControl game;
 	private int clockTick = 500;//ms
-	private int pauseTick = 500; /** wartoœæ timera w przypadku u¿ycia pauzy*/
 	private boolean paused = false;
 	ArrayList<Direction>  stepSolution;
 	
@@ -90,7 +89,7 @@ public class AlgorithmControler implements ActionListener
 						solveStage();
 						for (int k=0; k<stepSolution.size(); ++k)
 						{
-							while (paused) Thread.sleep(pauseTick);
+							while (paused) Thread.sleep(clockTick);
 							current = game.moveHole(stepSolution.get(k), current.x, current.y);
 							Thread.sleep(clockTick);
 						}
@@ -103,7 +102,7 @@ public class AlgorithmControler implements ActionListener
 						solveStage();
 						for (int k=0; k<stepSolution.size(); ++k)
 						{
-							while (paused) Thread.sleep(pauseTick);
+							while (paused) Thread.sleep(clockTick);
 							current = game.move(stepSolution.get(k), current.x, current.y);
 							Thread.sleep(clockTick);
 						}
