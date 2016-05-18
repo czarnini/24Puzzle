@@ -80,11 +80,17 @@ public class View
 				btnRozwiaz.setEnabled(false);
 				btnRozmieszaj.setEnabled(false);
 				btnPauza.setEnabled(true);
-				try {
-					controler.solve();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+				Thread solveThread = new Thread(){
+					public void run()
+					{
+						try {
+							controler.solve();
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}	
+					}
+				};
+				solveThread.start();
 			}
 		});
 		btnRozwiaz.setBounds(731, 124, 160, 40);

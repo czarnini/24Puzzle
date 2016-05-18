@@ -12,10 +12,7 @@ public class _24Puzzle {
 			AlgorithmControler algContr = new AlgorithmControler(game);
 			GVControler GVContr = new GVControler(game);
 			game.AddPuzzles();
-			game.print();
-			game.randomize();
-			game.print();
-			algContr.solveGame();
-			game.print();
+			//game.randomize();
+			//algContr.solveGame();
 	}
 }
