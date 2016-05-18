@@ -1,21 +1,34 @@
-import java.awt.Point;
+import java.awt.EventQueue;
 
 public class _24Puzzle {
 //Event Dispatch thread???
-	public static void main(String[] args) throws InterruptedException 
+	
+	GameControl game;
+	AlgorithmControler algContr;
+	GVControler GVContr;
+	
+	public  _24Puzzle() throws InterruptedException 
 	{
-		
-			GameControl game = new GameControl();
-			AlgorithmControler algContr = new AlgorithmControler(game);
-			GVControler GVContr = new GVControler(game);
-			game.AddPuzzles();
-			Point tmp = algContr.findBlank();
-			game.print();
-			game.randomize();
-			game.print();
-			
-			algContr.solveGame();
-			game.print();
+		game = new GameControl();
+		algContr = new AlgorithmControler(game);
+		GVContr = new GVControler(game);
+		game.AddPuzzles();
 	}
+	
+	
+	
+	 public static void main(String[] args) {
+			EventQueue.invokeLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					try {
+						_24Puzzle contrAll = new _24Puzzle();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			});
+		}
 
 }
