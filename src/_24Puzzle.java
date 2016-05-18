@@ -1,34 +1,21 @@
 import java.awt.EventQueue;
+import java.io.IOException;
 
 public class _24Puzzle {
 //Event Dispatch thread???
 	
-	GameControl game;
-	AlgorithmControler algContr;
-	GVControler GVContr;
 	
-	public  _24Puzzle() throws InterruptedException 
+	public static void main(String[] args) throws InterruptedException, IOException 
 	{
-		game = new GameControl();
-		algContr = new AlgorithmControler(game);
-		GVContr = new GVControler(game);
-		game.AddPuzzles();
+			
+			GameControl game = new GameControl();
+			AlgorithmControler algContr = new AlgorithmControler(game);
+			GVControler GVContr = new GVControler(game);
+			game.AddPuzzles();
+			game.print();
+			game.randomize();
+			game.print();
+			algContr.solveGame();
+			game.print();
 	}
-	
-	
-	
-	 public static void main(String[] args) {
-			EventQueue.invokeLater(new Runnable() {
-				
-				@Override
-				public void run() {
-					try {
-						_24Puzzle contrAll = new _24Puzzle();
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-			});
-		}
-
 }
