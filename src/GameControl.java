@@ -129,31 +129,9 @@ public class GameControl {
 				}
 			}
 		}
-		print();
 		redraw();
 	}
 	
-	/**
-	 * @TODO
-	 * Jak tylko bêdzie GUI to to usuwamy
-	 */
-	public void print()
-	{
-		for ( int i = 0; i < GameControl.WIDTH; ++i)
-		{
-			for(int j=0; j<GameControl.WIDTH; ++j)
-			{
-				if(!board[j][i].isEmpty())
-				System.out.print(board[j][i].peek().getID()+"\t");	
-				else
-					System.out.print("\t");
-			}
-			System.out.println();
-		}
-		System.out.println();
-		System.out.println();
-	}
-
 	/**
 	 * 
 	 * @param where w któr¹ stronê

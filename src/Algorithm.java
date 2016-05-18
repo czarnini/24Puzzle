@@ -6,11 +6,17 @@ import java.util.ArrayList;
  * na podstawie otrzymanych z zewn¹trz:  
  * wspó³rzêdnych startowych
  * wspó³rzêdnych koñcowych
- * 
  */
 public class Algorithm 
 {
+	/**
+	 * Pocz¹tek trasy
+	 */
 	private Point start;
+	
+	/**
+	 * Koniec trasy
+	 */
 	private Point end;
 	
 	
@@ -19,23 +25,32 @@ public class Algorithm
 		start = new Point();
 		end = new Point();
 	}
-	
+	/**
+	 * Ustawia start
+	 * @param start
+	 */
 	public void setStart(Point start)
 	{
 		this.start = start;
 	}
 	
+	/**
+	 * Ustawia koniec trasy
+	 * @param end
+	 */
 	public void setEnd(Point end)
 	{
 		this.end = end;
 	}
 	
-	
-	
+	/**
+	 * Algorytm najpierw porusza siê w poziomie, a¿ do odpowiedniej wartoœci wsp. X.
+	 * Nastêpnie porusza siê w pione, a¿ dojdzie do odpowiedniej wartoœci Y.
+	 * @return Rozwi¹zanie w postaci listy kierunków 
+	 */
 	public ArrayList<Direction> solve()
 	{
 		ArrayList<Direction> solution = new ArrayList<Direction>();
-		
 		//prawo lewo
 		while (start.x != end.x)
 		{
@@ -50,9 +65,6 @@ public class Algorithm
 				--start.x;
 			}	
 		}
-		
-		
-		
 		//gora dol
 		while (start.y != end.y)
 		{
@@ -67,8 +79,6 @@ public class Algorithm
 				--start.y;
 			}	
 		}
-		
-		
 		return solution;
 	}
 }

@@ -1,15 +1,10 @@
 import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /**
  * Klasa maj¹ca na celu przekazywanie danych z gry do algorytmu
- * 
- * Zastanawiam siê, czy metody, które tu umieœci³em nie powinny byæ w³aœnie w tym "abstrakcyjnym interfejsie",
- *  a klasa Algorithm implementowa³aby ten interfejs
  */
-public class AlgorithmControler implements ActionListener
+public class AlgorithmControler
 {
 	Algorithm algorithm;
 	GameControl game;
@@ -129,9 +124,5 @@ public class AlgorithmControler implements ActionListener
 		clockTick = i;
 		System.out.println("clockTick: "+i);
 	}
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+
 }
