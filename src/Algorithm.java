@@ -26,8 +26,8 @@ public class Algorithm
 		end = new Point();
 	}
 	/**
-	 * Ustawia start
-	 * @param start
+	 * Ustawia pocz¹tek trasy
+	 * @param start - wspó³rzêdnie X,Y pocz¹tku trasy
 	 */
 	public void setStart(Point start)
 	{
@@ -36,7 +36,7 @@ public class Algorithm
 	
 	/**
 	 * Ustawia koniec trasy
-	 * @param end
+	 * @param end - wspó³rzêdnie X,Y koñca trasy
 	 */
 	public void setEnd(Point end)
 	{
@@ -51,7 +51,7 @@ public class Algorithm
 	public ArrayList<Direction> solve()
 	{
 		ArrayList<Direction> solution = new ArrayList<Direction>();
-		//prawo lewo
+		/** Obs³uga ruchu prawo-lewo*/
 		while (start.x != end.x)
 		{
 			if(start.x < end.x)
@@ -65,7 +65,7 @@ public class Algorithm
 				--start.x;
 			}	
 		}
-		//gora dol
+		/** Obs³uga ruchu góra-dó³*/
 		while (start.y != end.y)
 		{
 			if(start.y < end.y)

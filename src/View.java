@@ -9,40 +9,44 @@ import java.awt.event.ActionEvent;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Color;
-
+/**
+ * 
+ * @author Marcin Janeczko, Micha³ Bogucki, Aleksander Tym
+ * Klasa odpowiadaj¹ca za interfejs graficzny programu
+ */
 public class View
 {
-	public final int boardWidth = 5;
-	public final int boardHeight = 5;
-	GVControler controler;
+	public final int boardWidth = 5; /** Szerokoœæ planszy*/
+	public final int boardHeight = 5; /** Wysokoœæ planszy*/
+	GVControler controler; /** Klasa kontrolera miêdzy widokiem a modelem gry*/
 	JPanel mainPanel;
 	JFrame mainFrame;
 	JButton btnRozmieszaj;
 	JButton btnPauza;
 	JButton btnRozwiaz;
 	JButton btnBoardField;
-	JButton gameButtons[][]; //tablica puzzli
-	Image texture[];
-	private int stepsNo = 0;
+	JButton gameButtons[][]; /**tablica puzzli*/
+	ImageIcon texture[]; /** tablica tekstur puzzli*/
+	private int stepsNo = 0; /** licznik kroków*/
 	private int screenWidth, screenHeight;
 	boolean paused = false;
 	JLabel lblSteps;
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-/*wygenerowany polautomatycznie (WindowBuilder pro) widok, na ktory skaladaja sie guziki do obslugi
- * oraz dwuwymiarowa tablica 25-1 guzikow (puzzli)*/
+/** wygenerowany polautomatycznie(za pomoc¹ wtyczki WindowBuilder pro) widok, na ktory skaladaja sie guziki do obslugi
+ * oraz dwuwymiarowa tablica 24 guzikow (puzzli)*/
 	View() throws IOException
 	{
 		mainFrame = new JFrame();
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.setTitle("24 puzzle solver");
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); //ustawienie okna na œrodku ekranu
 		screenWidth = (int)screenSize.getWidth();
 		screenHeight = (int)screenSize.getHeight();
 		mainFrame.setBounds((screenWidth/2)-500, (screenHeight/2)-350, 1000, 700);
 		mainFrame.setResizable(false);
 		mainFrame.getContentPane().setLayout(null);
 		btnRozwiaz = new JButton("Rozwi\u0105\u017C");
-		
+		btnRozwiaz.setEnabled(false);
 		btnRozmieszaj = new JButton("Rozmieszaj");
 		btnRozmieszaj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -71,7 +75,7 @@ public class View
 				}
 			}
 		});
-	//	btnPauza.setEnabled(false);
+		btnPauza.setEnabled(false);
 		btnPauza.setBounds(731, 177, 160, 40);
 		mainFrame.getContentPane().add(btnPauza);
 		
@@ -164,59 +168,39 @@ public class View
 		lblSteps.setBounds(874, 287, 56, 16);
 		mainFrame.getContentPane().add(lblSteps);
 		
-//schemat tablicy: TABLICA[<--->][/\ \/]
+		//schemat tablicy: TABLICA[<--->][/\ \/]
 		gameButtons = new JButton[boardWidth][boardHeight];
+		texture = new ImageIcon[25];
+		/** inicjacja tablicy guzików, nadanie im wartosci oraz przypisuje tekstury*/
 		for (int j=0,k=1;j < boardWidth; ++j)
 		{
 			for (int i=0; i < boardHeight ; ++i, ++k)
 			{
-		//		texture[k-1] = ImageIO.read("textures/1.png");
-				gameButtons[i][j] = new JButton(String.valueOf(k));
-				gameButtons[i][j].setEnabled(false);
+				StringBuilder sb = new StringBuilder("src/textures/"+k+".png");
+				String string = new String(sb);
+				texture[k-1] = new ImageIcon(string);
+				gameButtons[i][j] = new JButton();
 				gameButtons[i][j].setFont(new Font("Tahoma", Font.PLAIN, 30));
 				gameButtons[i][j].setBounds(80*(i+1), 80*(j+1), 80, 80);
-		//		gameButtons[i][j].setIcon(new ImageIcon (texture[k-1]));
+				gameButtons[i][j].setIcon(texture[k-1]);
 				mainFrame.getContentPane().add(gameButtons[i][j]);
 			}
 		}
-		/*Dosc manualne ustawienie koloru, prawdopodobnie do usuniecia lub zmiany na tekstury*/
-/*		gameButtons[0][0].setBackground(Color.GREEN);	
-		gameButtons[0][1].setBackground(new Color(173, 255, 47));	
-		gameButtons[0][2].setBackground(Color.YELLOW);
-		gameButtons[0][3].setBackground(new Color(255, 215, 0));
-		gameButtons[0][4].setBackground(Color.ORANGE);
-		gameButtons[1][0].setBackground(new Color(0, 250, 154));
-		gameButtons[1][1].setBackground(new Color(127, 255, 212));
-		gameButtons[1][2].setBackground(new Color(255, 255, 150));
-		gameButtons[1][3].setBackground(new Color(244, 164, 96));
-		gameButtons[1][4].setBackground(new Color(255, 99, 71));
-		gameButtons[2][0].setBackground(Color.CYAN);
-		gameButtons[2][1].setBackground(new Color(175, 238, 238));
-		gameButtons[2][2].setBackground(Color.WHITE);	
-		gameButtons[2][3].setBackground(new Color(240, 128, 128));
-		gameButtons[2][4].setBackground(Color.RED);
-		gameButtons[3][0].setBackground(new Color(30, 144, 255));;
-		gameButtons[3][1].setBackground(new Color(123, 104, 238));
-		gameButtons[3][2].setBackground(new Color(238, 130, 238));
-		gameButtons[3][3].setBackground(new Color(255, 130, 238));
-		gameButtons[3][4].setBackground(new Color(139, 0, 0));
-		gameButtons[4][0].setBackground(Color.BLUE);
-		gameButtons[4][1].setBackground(new Color(138, 43, 226));
-		gameButtons[4][2].setBackground(Color.MAGENTA);
-		gameButtons[4][3].setBackground(new Color(128, 0, 128));
-		gameButtons[4][4].setBackground(Color.BLACK);*/
 		gameButtons[boardWidth-1][boardHeight-1].setVisible(false);
-		
-		
 		mainPanel = new JPanel();
 		mainFrame.setVisible(true);
 	}
-/*funkcja laczaca widok z jego kontrolerem*/	
+/**
+ * Metoda ³¹cz¹ca widok z kontrolerem obs³uguj¹cym widok	
+ * @param controler - kontroler programu
+ */
 	public void linkController(GVControler controler)
 	{
 		this.controler = controler;
 	}
-/*funkcja wywolywana przy zakonczeniu ukladania, resetuje ona dostepnosc przyciskow*/
+/**
+ * Metoda wywo³ywana w przypadku u³o¿enia uk³adanki przez algorytm, resetuje ona stan guzików
+ */
 	void done()
 	{
 		btnPauza.setEnabled(false);
@@ -224,8 +208,13 @@ public class View
 		btnRozwiaz.setEnabled(false);
 		stepsNo = 0;
 	}
-/*funkcja przerysowujaca klocek o ID na pozycje (x,y). Zaklada, ze klocek przerysowany jest tylko jeden, bez wzgledu na kolejnosc.
- * Uzywana przy randomizacji, odswiezaniu widoku (przy klasycznej grze, ktora uniemozliwia kladzenie kolckow na siebie)*/	
+	/**
+	 * Najwa¿niejsza metoda widoku, przerysowuj¹ca klocek na now¹ pozycjê. Zak³ada, ¿e przesuwamy tylko jeden klocek
+	 * u¿ywana przy randomizacji i odœwiezaniu widoku w czasie uk³adania
+	 * @param x - wspó³rzêdna xowa docelowej pozycji
+	 * @param y - wspó³rzêdna ykowa docelowej pozycji
+	 * @param ID - ID przesuwanego klocka
+	 */	
 	void redraw (int x, int y, int ID)
 	{
 		int order = mainFrame.getContentPane().getComponentZOrder( gameButtons[(ID-1)%5][(int)(ID-1)/5]);
@@ -233,7 +222,9 @@ public class View
 		gameButtons[(ID-1)%5][(int)(ID-1)/5].setBounds((x+1)*80, (y+1)*80, 80, 80);
 		mainFrame.getContentPane().setComponentZOrder(gameButtons[(ID-1)%5][(int)(ID-1)/5], order);
 	}
-	
+	/**
+	 * Metoda inkrementuj¹ca i odœwie¿aj¹ca licznik kroków
+	 */
 	void updateSteps()
 	{
 		++stepsNo;

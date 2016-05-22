@@ -20,7 +20,7 @@ public class GVControler
 		gameControl.linkController(this);
 	}
 	/**
-	 * metoda przesy³aj¹ca do widoku polecenie przerywowania pozycji kafelka
+	 * metoda przesy³aj¹ca do widoku polecenie przerysowania pozycji kafelka
 	 * @param i - docelowa pozycja X kafelka
 	 * @param j - docelowa pozycja Y kafelka
 	 * @param ID - ID przesuwanego kafelka

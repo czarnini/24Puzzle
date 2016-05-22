@@ -21,27 +21,30 @@ public class GameControl {
 	private Stack<Puzzel> [][] board;
 	
 	/**
-	 * 
+	 * Powi¹zane z gr¹ kontrolery widoku i algorytmu
 	 */
 	GVControler controler;
 	AlgorithmControler algContr;
 	
 	/**
-	 * Zlinkowanie kontrolera GV z kontrolerem gry
+	 * Zlinkowanie kontrolera GV z gr¹
 	 * @param controler kontroler z którym bêdziemy linkowaæ
 	 */
 	public void linkController(GVControler controler)
 	{
 		this.controler = controler;
 	}
-	
+	/**
+	 * Zlinkowanie kontrolera algorytmu z gr¹
+	 * @param algorithmControler - kontroler z którym bêdziely linkowaæ
+	 */
 	public void linkAlgController(AlgorithmControler algorithmControler) {
 		this.algContr = algorithmControler;
 		
 	}
 	
 	/**
-	 * Konstruktor alokuje pamiêæ na stosy tworz¹ce planszê do gry
+	 * Konstruktor, alokuje pamiêæ na stosy tworz¹ce planszê do gry
 	 */
 	@SuppressWarnings("unchecked")
 	GameControl()
@@ -75,7 +78,7 @@ public class GameControl {
 	}
 	
 	/**
-	 * Funkcja dodaje puzzle na ich nominalne miejsce 
+	 * Funkcja dodaje puzzle na ich nominalne miejsce (ustawienie wyjœciowe)
 	 */
 	public void AddPuzzles()
 	{
@@ -133,7 +136,7 @@ public class GameControl {
 	}
 	
 	/**
-	 * 
+	 * Funkcja odpowiadaj¹ca za przesuniêcie puzzla po planszy
 	 * @param where w któr¹ stronê
 	 * @param x - wsp x klocka który bêdziemy ruszaæ
 	 * @param y - wsp y klocka, który bêdziemy ruszaæ
@@ -206,7 +209,9 @@ public class GameControl {
 		redraw();
 		return p;
 	}
-	
+	/**
+	 * Funkcja wyjœciowa poza klasê gry, wysy³aj¹ca polecenie przerysowania planszy
+	 */
 	public void redraw()
 	{
 		Puzzel tmpPuzzel;
@@ -225,7 +230,7 @@ public class GameControl {
 		}
 	}
 	/**
-	 * Przesuniêcie pustego pola to tak naprawdê przesuniêcie odpowiedniego puzzla (stosu puzzli?) w odpowiednim kierunku
+	 * Przesuniêcie pustego pola to tak naprawdê przesuniêcie odpowiedniego puzzla w przeciwnym kierunku
 	 * @param where w któr¹ stronê (góra dó³ prawo lewo)
 	 * @param x - wsp x wolnego pola, które chcemy przemieœciæ
 	 * @param y - wsp y wolnego pola które chcemy przemieœciæ
@@ -296,31 +301,42 @@ public class GameControl {
 				break;
 			}
 		}
-	//	controler.updateSteps();
 		redraw();
 		return p;
 	}
-	
+	/**
+	 * Funkcja przekazujaca do algorytmu akcjê zapauzowania uk³adania
+	 */
 	public void pause()
 	{
 		algContr.pause();
 	}
-	
+	/**
+	 * Funkcja przekazuj¹ca do algorytmu akcjê wznowienia uk³adania
+	 */
 	public void unPause()
 	{
 		algContr.unPause();
 	}
-	
+	/**
+	 * Funkcja przekazuj¹ca do algorytmu pocz¹tek uk³adania
+	 * @throws InterruptedException - wyj¹tek w przypadku przerwania czasu uœpienia
+	 */
 	public void solve() throws InterruptedException
 	{
 		algContr.solveGame();
 	}
-
+	/**
+	 * Funkcja przekazuj¹ca do kontrolera algorytmu czas miêdzy kolejnymi krokami
+	 * @param i - czas w milisekundach
+	 */
 	public void setClockTick(int i)
 	{
 		algContr.setClockTick(i);
 	}
-
+	/**
+	 * Funkcja przekazuj¹ca do widoku informacjê o skoñczeniu uk³adania algorytmu
+	 */
 	public void done() {
 		controler.done();
 	}
